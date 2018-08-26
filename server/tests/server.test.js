@@ -166,17 +166,17 @@ describe('PATCH /todos/:id', () => {
         let text = "good";
 
          request(app)
-             .patch(`/todos/${hexId}`)
-             .send({
-                 text: text,
-                 completed: false
-             })
-             .expect(200)
-             .expect((res) => {
-                 expect(res.body.todo.text).toBe(text);
-                 expect(res.body.todo.completed).toBe(false);
-                 expect(res.body.todo.completedAt).toNotExist();
-             })
-             .end(done)
+            .patch(`/todos/${hexId}`)
+            .send({
+                text: text,
+                completed: false
+            })
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.todo.text).toBe(text);
+                expect(res.body.todo.completed).toBe(false);
+                expect(res.body.todo.completedAt).toNotExist();
+            })
+            .end(done)
     });
 });
