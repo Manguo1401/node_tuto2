@@ -98,6 +98,21 @@ app.patch('/todos/:id', (req, res) => {
     });
 });
 
+app.post('/users', (req, res) => {
+    let body = _.pick(req.body, ['email', 'password']);
+    let user = new User(body);
+
+    user.save().then(() => {
+        return user.generateAuthToken(); // user is twicked and saved in this method (se the user object)
+    })
+    .then((token) => {
+        res.header('x-auth', token).send(user); // x- => permet de faire un header personnalisé qui n'existe pas par défaut en http
+    })
+    .catch((err) => {
+        res.status(400).send(err);
+    });
+});
+
 app.listen(port, () => {
     console.log(`Started on port ${port}`);
 });
