@@ -48,6 +48,26 @@ UserSchema.methods.generateAuthToken = function () {
     });
 };
 
+UserSchema.statics.findByToken = function(token) {
+    let User = this;
+    let decoded;
+
+    try {
+        decoded = jwt.verify(token, "abc123");
+    } catch (err) {
+        /* return new Promise((resolve, reject) => {
+            reject();
+        }); */ //Same thing as under
+        return Promise.reject(/* 'err argument value here' */);
+    }
+
+    return User.findOne({
+        '_id': decoded._id,
+        'tokens.token': token,
+        'tokens.access': 'auth'
+    });
+};
+
 UserSchema.methods.toJSON = function () {
     let user = this;
 
