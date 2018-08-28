@@ -71,7 +71,6 @@ UserSchema.statics.findByToken = function(token) {
 
 UserSchema.pre('save', function (next) {
     let user = this;
-    console.log(user.isModified());
 
     if (user.isModified('password')) { //Takes an individual property and checks if it's modified
         bcrypt.genSalt(10, (err, salt) => {
